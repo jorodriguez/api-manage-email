@@ -21,7 +21,7 @@ const findOne = async (query, params) => {
 };
 
 
-const execute = (query, params) => {
+const execute = async (query, params) => {
     console.log("@execute");
     try {
         if (!query || !params) {

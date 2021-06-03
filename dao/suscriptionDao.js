@@ -10,14 +10,15 @@ const getSuscription = async (apiKey) => {
             `SELECT * FROM SUSCRIPTIONS WHERE API_KEY = $1 AND ACTIVE`
             , [apiKey]
         );
+        console.log("Registro en db "+JSON.stringify(register));
     if (register) {
         suscription = {
             host: register.host,
             port: register.port,
             secureConnection: register.secureConnection,
             auth: {
-                user: register.user,
-                pass: register.password
+                user: register.user_name,
+                pass: register.pass
             },
             fromName : register.from_name
         }

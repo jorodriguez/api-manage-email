@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const {create,verify } = require('./controllers/tokenManage');
+const { sendEmail } = require('./controllers/emailController');
 
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 	next();
 });
 
-//app.post('/create',create);
+app.post('/email',sendEmail);
 
 app.get('/', (request, response) => {
 	console.log(process.env);
