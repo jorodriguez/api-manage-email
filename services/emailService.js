@@ -81,7 +81,7 @@ const sendEmailSync = (correoDto, suscription) => {
             if (error) {
                 guardarLog("Error ", new Email(asunto, para, cc, cco, html, suscription.id, error));
             } else {
-                guardarLog("ENVIO - OK ", new Email(asunto, para, cc, cco, html, suscription.idr));
+                guardarLog("ENVIO - OK ", new Email(asunto, para, cc, cco, html, suscription.id));
             }
         });
        
