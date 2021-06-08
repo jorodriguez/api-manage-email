@@ -13,6 +13,7 @@ const getSuscription = async (apiKey) => {
         console.log("Registro en db "+JSON.stringify(register));
     if (register) {
         suscription = {
+            id:register.id,
             host: register.host,
             port: register.port,
             secureConnection: register.secureConnection,

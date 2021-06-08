@@ -1,4 +1,18 @@
 ﻿
+ 
+create table log(
+	id serial not null primary key,
+	suscriptions_id int not null references suscriptions(id),	
+	type text not null,	
+	para text,
+	cc text,
+	cco text,
+	html text,
+	validation_emails text,	
+	log text,	
+	active boolean default false
+)
+
 
 select * from suscriptions
 

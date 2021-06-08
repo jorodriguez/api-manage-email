@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const { sendEmail } = require('./controllers/emailController');
+const { sendEmail,getLogFails } = require('./controllers/emailController');
 
 const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
@@ -20,6 +20,7 @@ app.use((req, res, next) => {
 });
 
 app.post('/email',sendEmail);
+app.post('/log-fail',getLogFails);
 
 app.get('/', (request, response) => {
 	console.log(process.env);

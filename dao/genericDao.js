@@ -20,9 +20,26 @@ const findOne = async (query, params) => {
     }
 };
 
+const findAll = async (query, params) => {
+    console.log("@findAll " + JSON.stringify(params));
+    try {
+
+        if (!query || !params) {
+            console.error("el query o los parametros son null " + query);
+            return new ValidationException("La consulta es null");
+        }
+
+        let results = await pool.query(query, params);
+
+        return results.rows;
+    } catch (error) {
+        console.log("findAll error " + error);
+        return null;
+    }
+};
 
 const execute = async (query, params) => {
-    console.log("@execute");
+    console.log("@execute "+query);
     try {
         if (!query || !params) {
             console.error("el query o los parametros son null " + query);
@@ -30,10 +47,10 @@ const execute = async (query, params) => {
         }
         return await pool.query(query, params);
     } catch (error) {
-        console.log("findOne error " + error);
+        console.log("execute error => " + error);
         return null;
     }
 
 };
 
-module.exports = { findOne,execute };
+module.exports = { findOne,findAll, execute };
