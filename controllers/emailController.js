@@ -6,18 +6,18 @@ const moment = require('moment');
 
 let RULE_EMAIL_VALIDATION = { minDomainSegments: 2, tlds: { allow: ['com', 'net'] } };
 
-const schemaBody = Joi.object({
-    para: Joi.string().required(),
-    asunto: Joi.string(),
-    cc: Joi.string().email(RULE_EMAIL_VALIDATION).optional().allow(''),
-    cco: Joi.string().email(RULE_EMAIL_VALIDATION).optional().allow(''),
-    html: Joi.string().required(),
-    async: Joi.bool().optional(),
+const schemaBody = Joi.object({    
+    asunto: Joi.string().optional().allow(""),
+    para: Joi.string().optional().allow(""),
+    cc: Joi.string().optional().allow(""),
+    cco: Joi.string().optional().allow(""),
+    html: Joi.string(),    
     api_key: Joi.string().required()
 });
 
 const sendEmail = async (request, response) => {
     console.log("@sendEmail");
+ 
     const body = { email } = request.body;
 
     try {
@@ -27,20 +27,28 @@ const sendEmail = async (request, response) => {
 
         let returning = { process: true };
 
-        if (suscription) {
-            //returning = await emailService.sendEmail(body, suscription);           
-            emailService.sendEmail(body, suscription);
+        if ( suscription ) {
+            
+            emailService.sendEmail( body, suscription );
+
         } else {
+
             returning = new ValidationException("Se requiere un api key válida.");
+
         }
+        
         response.status(200).json(returning);
 
         console.log("===|___________________|===");
         console.log("===| Final del proceso |===");
         console.log("===|̣̣̣-------------------|===");
-    } catch (e) {
-        console.log("Exception in sendEmail controller " + e);
-        response.status(401).json(new ValidationException(e.details));
+
+    } catch (error) {
+        
+        console.log("Exception in sendEmail controller " + error);
+        
+        response.status(401).json(new ValidationException(error.details));
+    
     }
 };
 
