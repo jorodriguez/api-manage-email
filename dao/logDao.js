@@ -19,8 +19,7 @@ const getLog = async (apiKey) => {
 
 
 const saveLog = async (logDto) => {
-    console.log("--------------------------------------");
-     console.log("@saveLog "+JSON.stringify(logDto));
+    console.log("@saveLog ");
     try {
 
         let params = [
@@ -30,19 +29,22 @@ const saveLog = async (logDto) => {
             logDto.emailDto.cc || '',
             logDto.emailDto.cco || '',
             logDto.emailDto.html || '',
-            logDto.validation_emails,            
-            logDto.emailDto.status || ''
+            JSON.stringify(logDto.validation_emails),
+            JSON.stringify(logDto.emailDto.status) || ''
         ];
-        console.log("PARAMS " + params);
-        console.log("--------------------------------------");
-        let logId =
+
+        console.log("PARAMS " + params  );
+
+        let returning =
             await genericDao
                 .execute(`
                     INSERT INTO LOG(SUSCRIPTIONS_ID,TYPE,PARA,CC,CCO,HTML,VALIDATION_EMAILS,LOG) 
-                    VALUES($1,$2,$3,$4,$5,$6,$7,$8) RETURNING ID;
+                    VALUES($1,$2,$3,$4,$5,$6,$7::text,$8) RETURNING ID;
                 `, params);
-        console.log("GUARDADO EN DB "+logId);
-        return logId;
+
+        //console.log("GUARDADO EN DB " + JSON.stringify(returning));
+
+        return (returning.rowCount > 1) ? returning.rows[0] : null;
     } catch (error) {
         console.log("Error in saveLog " + JSON.stringify(logDto) + " Error " + error);
         return null;

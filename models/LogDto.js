@@ -1,6 +1,6 @@
 
 
-class Log {
+class LogDto {
 
     constructor(suscription_id,type,emailDto,validation_emails) {
         this.suscription_id = suscription_id;
@@ -12,4 +12,4 @@ class Log {
 }
 
 
-module.exports = Log ;
+module.exports = LogDto ;

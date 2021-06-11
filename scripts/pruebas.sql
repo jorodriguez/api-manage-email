@@ -16,6 +16,24 @@ create table suscriptions(
 )
 
  
+
+create table suscriptions(
+	id serial not null primary key,
+	name text not null,
+	from_name text not null,
+	host text not null,
+	port numeric not null,	
+	user_name text not null,
+	pass text not null,
+	secureConnection boolean default false,
+	tls boolean default false,
+	ciphers text,
+	api_key text not null default gen_random_uuid(),
+	active boolean default true
+)
+
+--alter table suscriptions alter column api_key set default gen_random_uuid();
+
 create table log(
 	id serial not null primary key,
 	suscriptions_id int not null references suscriptions(id),	
@@ -27,7 +45,8 @@ create table log(
 	validation_emails text,	
 	log text,	
 	active boolean default false
-)
+);
+
 
 
 select * from suscriptions

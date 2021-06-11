@@ -1,8 +1,9 @@
 
 
-class Email {
+class EmailDto {
 
-    constructor(asunto,para,cc,cco,html,suscription_id,status) {
+    //constructor(asunto,para,cc,cco,html,suscription_id,status) {
+    constructor(){
         this.asunto = asunto;
         this.para = para
         this.cc = cc;
@@ -11,7 +12,9 @@ class Email {
         this.suscription_id = suscription_id;
         this.status = status;
     }   
+    
 }
 
+module.exports = EmailDto;
 
-module.exports = Email ;
+
