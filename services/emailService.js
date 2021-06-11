@@ -8,10 +8,8 @@ let Log = require('../models/Log');
 
 const TYPE = { ERROR: "ERROR", SEND_OK: "SEND_OK" };
 
-const sendEmail = (correoDto, suscription) => {
-    console.log("@sendEmailSync");
+const sendEmail = (correoDto, suscription) => {    
     try {
-
         const { para, cc, cco, asunto, html } = correoDto;
 
         if (para == undefined || para == '' || para == null) {
