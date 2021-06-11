@@ -4,6 +4,4 @@ const STATUS = {
     UNAUTHORIZED:401
 }
     
-
-
 module.exports = {  STATUS };

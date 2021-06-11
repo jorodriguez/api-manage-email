@@ -20,7 +20,7 @@ app.use((req, res, next) => {
 });
 
 app.post('/email',sendEmail);
-app.post('/log-fail',getLogFails);
+app.post('/logs',getLogFails);
 
 app.get('/', (request, response) => {
 	console.log(process.env);

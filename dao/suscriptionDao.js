@@ -1,5 +1,6 @@
 
 const genericDao = require('./genericDao');
+const SusciptionDto = require('../models/SuscriptionDto');
 
 const getSuscription = async (apiKey) => {
     console.log("@getSuscription");
@@ -10,33 +11,30 @@ const getSuscription = async (apiKey) => {
             `SELECT * FROM SUSCRIPTIONS WHERE API_KEY = $1 AND ACTIVE`
             , [apiKey]
         );
-        console.log("Registro en db "+JSON.stringify(register));
+
+    console.log("Registro en db " + JSON.stringify(register));
+
     if (register) {
-        suscription = {
-            id:register.id,
-            host: register.host,
-            port: register.port,
-            secureConnection: register.secureConnection,
-            auth: {
-                user: register.user_name,
-                pass: register.pass
-            },
-            fromName : register.from_name
-        }
+
+        suscription =
+            SusciptionDto.builder()
+                .setId(register.id)
+                .setHost(register.host)
+                .setPort(register.port)
+                .setSecureConnection(register.secureConnection)
+                .setUser(register.user_name)
+                .setPassword(register.pass)
+                .setfromName(register.fromName);
+
         if (register.tls) {
-            suscription.tls = {
-                ciphers: register.ciphers
-            }
+
+            suscription.setCiphers(register.ciphers);
+
         }
     }
 
     return suscription;
 
 };
-
-
-const crearCuentaModulo = (moduloDto) => {
-    ///fixme create   
-}
 
 module.exports = { getSuscription };

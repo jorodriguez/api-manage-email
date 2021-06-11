@@ -5,7 +5,7 @@ const Joi = require('joi');
 
 module.exports = class SchemaValidationEmail {
 
-    static instance = new SchemaEmail();
+    static instance = new SchemaValidationEmail();
 
     validation = schemaBody = Joi.object({
         asunto: Joi.string().optional().allow(""),

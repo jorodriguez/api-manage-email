@@ -2,10 +2,20 @@ const nodemailer = require('nodemailer');
 
 class WrapperMailer {
 
-    static instance = new SchemaEmail();
+    static instance = new WrapperMailer();
     
-    sendEmail = (EmailDto){
-            //
+    sendEmail = (emailDto) =>{
+       
+        let transporter = nodemailer.createTransport(emailDto.suscription);
+
+        const mailData = emailDto.build();
+
+        transporter.sendMail(mailData, function (error, info) {
+            if (error) {
+               throw error;
+            }
+        });
+        transporter.close();        
     }
 
 }
