@@ -1,24 +1,40 @@
 const nodemailer = require('nodemailer');
+const { ValidationException } = require('../exception/exeption');
 
 class WrapperMailer {
 
-    static instance = new WrapperMailer();
-    
-    sendEmail = (emailDto) =>{
-       
-        let transporter = nodemailer.createTransport(emailDto.suscription);
+    constructor() {
+        this.emailDto;
+    }
 
-        const mailData = emailDto.build();
+    withEmail(emailDto) {
+        this.emailDto = emailDto;
+        return this;
+    }
 
-        transporter.sendMail(mailData, function (error, info) {
-            if (error) {
-               throw error;
+    async sendEmail() {
+
+        let transporter;
+
+        try {
+
+            if (!this.emailDto || !this.emailDto.suscription) {
+                throw new ValidationException("Suscription and email are required ");
             }
-        });
-        transporter.close();        
+
+            transporter =
+                nodemailer
+                    .createTransport(
+                        this.emailDto.suscription.build()
+                    );
+
+            await transporter.sendMail(this.emailDto.buildEmailData());
+
+        } finally {
+            transporter.close()
+        }
     }
 
 }
-
 
 module.exports = WrapperMailer;

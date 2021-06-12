@@ -19,18 +19,20 @@ const getAll = async (apiKey) => {
 
 
 const save = async (logDto) => {
-    console.log("@saveLog ");
+    
     try {
 
+        let wrapLog = (typeof logDto.log) == 'string' ? `${logDto.log}` : JSON.stringify(logDto.log);
+
         let params = [
-            logDto.suscription_id,
+            logDto.suscriptionId,
             logDto.type,
             logDto.emailDto.para,
             logDto.emailDto.cc || '',
             logDto.emailDto.cco || '',
             logDto.emailDto.html || '',
             JSON.stringify(logDto.validation_emails),
-            JSON.stringify(logDto.emailDto.status) || ''
+            wrapLog || ''
         ];
 
         console.log("PARAMS " + params  );

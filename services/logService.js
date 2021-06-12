@@ -9,7 +9,7 @@ const getAll = async (api_key) => {
 const save = async (logDto) => {    
     try {               
           
-         return logDao.saveLog(logDto);
+         return logDao.save(logDto);
         
     } catch (error) {
         console.log("Error on save log" + error);

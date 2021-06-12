@@ -1,6 +1,7 @@
 
 const { deleteWhiteSpace } = require('../libs/Utils');
-
+const {ValidationException } = require('../exception/exeption');
+ 
 class EmailDto {
 
     //constructor(asunto,para,cc,cco,html,suscription_id,status) {
@@ -10,7 +11,7 @@ class EmailDto {
         this.cc;
         this.cco;
         this.html;
-        this.suscriptionId;
+        this.suscription;
         this.status;
     }   
 
@@ -48,13 +49,18 @@ class EmailDto {
         return new EmailDto();
      }
 
-     build() {
+     buildEmailData() {
+         
+         if(!this.suscription){
+             throw new ValidationException("the suscription is required on emailDto");
+         }
+
         return {
-            from : deleteWhiteSpace(this.from),
-            to : deleteWhiteSpace(this.to),
+            from : this.suscription.fromName,
+            to : deleteWhiteSpace(this.para),
             cc : deleteWhiteSpace(this.cc),
             cco : deleteWhiteSpace(this.cco),
-            subject : this.subject,
+            subject : this.asunto,
             html : this.html
         };
     }

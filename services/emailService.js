@@ -3,22 +3,24 @@ let LogDto = require('../models/LogDto');
 const { TYPE_ERROR } = require('../libs/constants');
 const WrapperMailer = require('../libs/WrapperMailer');
 
-const sendEmail = (correoDto) => {
+const sendEmail = async (correoDto) => {
     try {
 
-        WrapperMailer.instance.sendEmail(correoDto);
+        await new WrapperMailer()
+                    .withEmail(correoDto)
+                    .sendEmail();
 
     } catch (error) {
-        console.log("Error on sending " + error);
+        console.log("Error on sending email " +error);
         logService
-            .saveValidationLog(
+            .save(
                 LogDto
                     .builder()
                     .setEmailDto(correoDto)
                     .setLog(error)
                     .setType(TYPE_ERROR.ERROR)
                     .build()
-            );        
+            );
     }
 };
 

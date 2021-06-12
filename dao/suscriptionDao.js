@@ -1,30 +1,27 @@
 
 const genericDao = require('./genericDao');
-const SusciptionDto = require('../models/SuscriptionDto');
+const SuscriptionDto = require('../models/SuscriptionDto');
+
+const FIND_SUSCRIPTION_WHERE_APIKEY = `SELECT * FROM SUSCRIPTIONS WHERE API_KEY = $1 AND ACTIVE`;
 
 const getSuscription = async (apiKey) => {
-    console.log("@getSuscription");
     let suscription;
-
-    let register = await genericDao
-        .findOne(
-            `SELECT * FROM SUSCRIPTIONS WHERE API_KEY = $1 AND ACTIVE`
-            , [apiKey]
-        );
-
-    console.log("Registro en db " + JSON.stringify(register));
+    let register =
+        await genericDao
+            .findOne(FIND_SUSCRIPTION_WHERE_APIKEY, [apiKey]);
 
     if (register) {
 
         suscription =
-            SusciptionDto.builder()
+            SuscriptionDto.builder()
                 .setId(register.id)
                 .setHost(register.host)
                 .setPort(register.port)
-                .setSecureConnection(register.secureConnection)
+                .setSecureConnection(register.secureconnection)
                 .setUser(register.user_name)
+                .setTls(register.tls)
                 .setPassword(register.pass)
-                .setfromName(register.fromName);
+                .setfromName(register.from_name);
 
         if (register.tls) {
 

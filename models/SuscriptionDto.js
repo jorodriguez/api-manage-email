@@ -11,49 +11,55 @@ class SusciptionDto{
         this.password;
         this.fromName;
         this.ciphers;
+        this.tls;
+        
     }
 
-    static builder = ()=>{
+    static builder(){
         return new SusciptionDto()
     }
 
-    setId = (id = '')=>{
+    setId (id = ''){
         this.id = id;
         return this;
     }
     
-    setHost = (host = '') => {
+    setHost(host = ''){
         this.host = host;
         return this;
     }
 
-    setPort = (port = '') => {
+    setPort(port = '') {
         this.port = port;
         return this;
     }
 
-    setSecureConnection = (secureConnection = '') =>{
+    setSecureConnection(secureConnection = ''){
         this.secureConnection = secureConnection;
         return this;
     }
 
-    setUser = (user = '') => {
+    setUser(user = '') {
         this.user = user;
         return this;
     }
 
-    setPassword = (password = '')=>{
+    setPassword(password = ''){
         this.password = password;
         return this;
     }
 
-    setfromName = (fromName = '') => {
+    setfromName(fromName = ''){
         this.fromName = fromName;
         return this;
     }
 
-    setCiphers = (ciphers = '')=>{
+    setCiphers(ciphers = ''){
         this.ciphers = ciphers;
+        return this;
+    }
+    setTls(tls = false){
+        this.tls = tls;
         return this;
     }
 
@@ -64,10 +70,10 @@ class SusciptionDto{
             port: this.port,
             secureConnection: this.secureConnection,
             auth: {
-                user: this.user_name,
-                pass: this.pass
+                user: this.user,
+                pass: this.password
             },
-            tls : { ciphers:this.ciphers  },
+            tls : {  ciphers:this.ciphers  },
             fromName: this.fromName
         }
     }

@@ -1,18 +1,21 @@
 const { ValidationException } = require('../exception/exeption');
 const emailService = require('../services/emailService');
+const logService = require('../services/logService');
 const suscriptionService = require('../services/suscriptionService');
-const { schemaValidationEmail } = require('../libs/SchemaValidationEmail');
+const schemaValidationEmail = require('../libs/SchemaValidationEmail');
 const { STATUS } = require('../libs/statusCode');
-const { PROCESS_ACEPTED } = require('../libs/constants');
+const { PROCESS_ACEPTED,APIKEY_NOT_VALID } = require('../libs/constants');
 let EmailDto = require('../models/EmailDto');
 
 
 const sendEmail = async (request, response) => {
 
+    console.log(JSON.stringify(request.body));
+
     const body = { para, cc, cco, asunto, html, api_key } = request.body;
 
     try {
-        await schemaValidationEmail.validateAsync(body);
+        await schemaValidationEmail.getSchemaBody().validateAsync(body);
 
         const suscription = await suscriptionService.getSuscription(api_key);
 
@@ -35,6 +38,7 @@ const sendEmail = async (request, response) => {
 
         }
 
+        console.log("======RESPUESTA====="+JSON.stringify(PROCESS_ACEPTED));
         response.status(STATUS.OK).json(PROCESS_ACEPTED);
 
     } catch (error) {
@@ -52,26 +56,27 @@ const getLogFails = async (request, response) => {
     const body = { api_key } = request.body;
 
     try {
-        let returning = { process: true };
+        let returning;
 
         if (!api_key) {
-            returning = new ValidationException("Se requiere un api key válida.");
-            response.status(200).json(returning);
+            
+            response.status(STATUS.UNAUTHORIZED).json(new ValidationException(APIKEY_NOT_VALID));
+            
         }
 
         const suscription = await suscriptionService.getSuscription(api_key);
 
         if (suscription) {
-            returning = await emailService.getLog(api_key);
+            returning = await logService.getAll(api_key);
         } else {
-            returning = new ValidationException("Se requiere un api key válida.");
+            returning = new ValidationException(APIKEY_NOT_VALID);
         }
 
-        response.status(200).json(returning);
+        response.status(STATUS.OK).json(returning);
 
-    } catch (e) {
-        console.log("Exception in sendEmail controller " + e);
-        response.status(401).json(new ValidationException(e.details));
+    } catch (exception) {
+      
+        response.status(STATUS.CONFLICT).json(new ValidationException(exception));
     }
 };
 

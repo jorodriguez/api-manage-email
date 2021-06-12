@@ -3,7 +3,7 @@ const { ValidationException } = require('../exception/exeption');
 const { pool } = require('../db/conection');
 
 const findOne = async (query, params) => {
-    console.log("@findOne " + JSON.stringify(params));
+ 
     try {
 
         if (!query || !params) {
@@ -21,7 +21,7 @@ const findOne = async (query, params) => {
 };
 
 const findAll = async (query, params) => {
-    console.log("@findAll " + JSON.stringify(params));
+   
     try {
 
         if (!query || !params) {
@@ -39,7 +39,7 @@ const findAll = async (query, params) => {
 };
 
 const execute = async (query, params) => {
-    console.log("@execute "+query);
+  
     try {
         if (!query || !params) {
             console.error("el query o los parametros son null " + query);
