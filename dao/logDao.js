@@ -2,7 +2,6 @@
 const genericDao = require('./genericDao');
 
 const getAll = async (apiKey) => {
-    console.log("@getAll");
     try {
         let register = await genericDao
             .findAll(

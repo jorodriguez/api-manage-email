@@ -11,8 +11,7 @@ class SusciptionDto{
         this.password;
         this.fromName;
         this.ciphers;
-        this.tls;
-        
+        this.tls;   
     }
 
     static builder(){

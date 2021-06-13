@@ -1,7 +1,7 @@
 const logService = require('../services/logService');
 let LogDto = require('../models/LogDto');
-const { TYPE_ERROR } = require('../libs/constants');
-const WrapperMailer = require('../libs/WrapperMailer');
+const { TYPE_ERROR } = require('../utils/constants');
+const WrapperMailer = require('../utils/WrapperMailer');
 
 const sendEmail = async (correoDto) => {
     try {

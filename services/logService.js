@@ -2,7 +2,7 @@ const logDao = require('../dao/logDao');
 
 const getAll = async (api_key) => {   
         
-    return logDao.getLog(api_key);
+    return logDao.getAll(api_key);
     
 };
 

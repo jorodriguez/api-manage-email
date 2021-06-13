@@ -1,12 +1,10 @@
 const { ValidationException } = require('../exception/exeption');
 const emailService = require('../services/emailService');
-const logService = require('../services/logService');
 const suscriptionService = require('../services/suscriptionService');
-const schemaValidationEmail = require('../libs/SchemaValidationEmail');
-const { STATUS } = require('../libs/statusCode');
-const { PROCESS_ACEPTED,APIKEY_NOT_VALID } = require('../libs/constants');
+const schemaValidationEmail = require('../utils/SchemaValidationEmail');
+const { STATUS } = require('../utils/statusCode');
+const { PROCESS_ACEPTED,APIKEY_NOT_VALID } = require('../utils/constants');
 let EmailDto = require('../models/EmailDto');
-
 
 const sendEmail = async (request, response) => {
 
@@ -51,34 +49,5 @@ const sendEmail = async (request, response) => {
 };
 
 
-const getLogFails = async (request, response) => {
-    console.log("@getLogFails ");
-    const body = { api_key } = request.body;
 
-    try {
-        let returning;
-
-        if (!api_key) {
-            
-            response.status(STATUS.UNAUTHORIZED).json(new ValidationException(APIKEY_NOT_VALID));
-            
-        }
-
-        const suscription = await suscriptionService.getSuscription(api_key);
-
-        if (suscription) {
-            returning = await logService.getAll(api_key);
-        } else {
-            returning = new ValidationException(APIKEY_NOT_VALID);
-        }
-
-        response.status(STATUS.OK).json(returning);
-
-    } catch (exception) {
-      
-        response.status(STATUS.CONFLICT).json(new ValidationException(exception));
-    }
-};
-
-
-module.exports = { sendEmail, getLogFails };
+module.exports = { sendEmail };

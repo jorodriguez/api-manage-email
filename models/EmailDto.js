@@ -1,5 +1,5 @@
 
-const { deleteWhiteSpace } = require('../libs/Utils');
+const { deleteWhiteSpace } = require('../utils/Utils');
 const {ValidationException } = require('../exception/exeption');
  
 class EmailDto {
